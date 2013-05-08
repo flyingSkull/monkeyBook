@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="MonkeyBookFileUpload:war exploded">
+    <output-path>$PROJECT_DIR$/target/MonkeyBookFileUpload</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="MonkeyBookFileUpload/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="MonkeyBookFileUpload" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: com.sun.jersey:jersey-server:1.12" />
+          <element id="library" level="project" name="Maven: asm:asm:3.1" />
+          <element id="library" level="project" name="Maven: com.sun.jersey:jersey-core:1.12" />
+          <element id="library" level="project" name="Maven: com.sun.jersey.contribs:jersey-multipart:1.12" />
+          <element id="library" level="project" name="Maven: org.jvnet:mimepull:1.6" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.0.1" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.2.2" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
