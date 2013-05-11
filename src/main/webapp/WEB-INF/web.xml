@@ -4,7 +4,7 @@
     <display-name>MonkeyBook Web Application</display-name>
 
     <servlet>
-        <servlet-name>jersey-serlvet</servlet-name>
+        <servlet-name>jersey-servlet</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
@@ -14,12 +14,20 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>jersey-serlvet</servlet-name>
+        <servlet-name>jersey-servlet</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 
     <welcome-file-list>
         <welcome-file>angularjs.html</welcome-file>
     </welcome-file-list>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/appContext.xml
+            /WEB-INF/spring-data.xml
+        </param-value>
+    </context-param>
 
 </web-app>
