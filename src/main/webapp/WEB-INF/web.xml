@@ -19,15 +19,12 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>angularjs.html</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>
-            /WEB-INF/appContext.xml
-            /WEB-INF/spring-data.xml
-        </param-value>
+        <param-value>/WEB-INF/appContext.xml</param-value>
     </context-param>
 
 </web-app>
