@@ -1,10 +1,14 @@
 package com.monkey.fileupload;
 
+import com.monkey.image.ImageSizeConverter;
+import com.sun.jersey.spi.inject.Inject;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,11 +24,29 @@ import java.util.List;
 
 
 @Path("/file")
+@Component
 public class UploadFileService {
 
     private static final String FILE_UPLOAD_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "UploadedImages" + File.separator;
+
     private static final String SUCCESS_RESPONSE = "Successful";
     private static final String FAILED_RESPONSE = "Failed";
+
+
+
+
+    @Autowired
+    private ImageSizeConverter imageSizeConverter;
+
+    public ImageSizeConverter getImageSizeConverter() {
+        return imageSizeConverter;
+    }
+
+    public void setImageSizeConverter(ImageSizeConverter imageSizeConverter) {
+        this.imageSizeConverter = imageSizeConverter;
+    }
+
+
 
     /**
      * @param request
