@@ -1,7 +1,6 @@
 package com.monkey.fileupload;
 
 import com.monkey.image.ImageSizeConverter;
-import com.sun.jersey.spi.inject.Inject;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -28,25 +27,10 @@ import java.util.List;
 public class UploadFileService {
 
     private static final String FILE_UPLOAD_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "UploadedImages" + File.separator;
-
     private static final String SUCCESS_RESPONSE = "Successful";
     private static final String FAILED_RESPONSE = "Failed";
-
-
-
-
     @Autowired
     private ImageSizeConverter imageSizeConverter;
-
-    public ImageSizeConverter getImageSizeConverter() {
-        return imageSizeConverter;
-    }
-
-    public void setImageSizeConverter(ImageSizeConverter imageSizeConverter) {
-        this.imageSizeConverter = imageSizeConverter;
-    }
-
-
 
     /**
      * @param request
@@ -57,8 +41,7 @@ public class UploadFileService {
     @Path("/multipleFiles")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.TEXT_PLAIN)
-    public void uploadFile(@Context HttpServletRequest request,
-                           @Context HttpServletResponse res) throws Exception {
+    public void uploadFile(@Context HttpServletRequest request, @Context HttpServletResponse res) throws Exception {
 
         String responseStatus = SUCCESS_RESPONSE;
         String candidateName = null;
@@ -68,10 +51,7 @@ public class UploadFileService {
             final FileItemFactory factory = new DiskFileItemFactory();
             final ServletFileUpload fileUpload = new ServletFileUpload(factory);
             try {
-                /*
-                 * parseRequest returns a list of FileItem
-                 * but in old (pre-java5) style
-                 */
+
                 final List items = fileUpload.parseRequest(request);
 
                 if (items != null) {
@@ -104,20 +84,13 @@ public class UploadFileService {
         }
 
     }
+
+    public ImageSizeConverter getImageSizeConverter() {
+        return imageSizeConverter;
+    }
+
+    public void setImageSizeConverter(ImageSizeConverter imageSizeConverter) {
+        this.imageSizeConverter = imageSizeConverter;
+    }
+
 }
-
-
-//    /**
-//     * @param request
-//     * @return
-//     */
-//    @POST
-//    @Path("/multipleFiles")
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    public void uploadMultipleFiles(@Context HttpServletRequest request, @Context HttpServletResponse response) {
-//
-//
-//
-//    }
-//
-//}

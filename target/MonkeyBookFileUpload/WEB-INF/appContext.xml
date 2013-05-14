@@ -6,8 +6,12 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <context:component-scan base-package="com.monkey.fileupload" />
+    <context:component-scan base-package="com.monkey.fileupload"/>
 
-    <!--<bean id="transactionBo" class="com.monkey" />-->
+    <bean id="imageSizeConverter" class="com.monkey.image.ImageSizeConverter"/>
+
+    <bean id="fileUpload" class="com.monkey.fileupload.UploadFileService">
+        <property name="imageSizeConverter" ref="imageSizeConverter"></property>
+    </bean>
 
 </beans>
