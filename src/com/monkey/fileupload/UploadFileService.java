@@ -18,71 +18,76 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.monkey.image.ImageSizeConverter;
 
 /**
  * Created with IntelliJ IDEA. User: Ric Date: 06.05.13 Time: 11:26 To change
  * this template use File | Settings | File Templates.
  */
-
-@Path("/file")
 @Component
+@Path("/file")
 public class UploadFileService {
 
-	private static final String FILE_UPLOAD_PATH = System.getProperty("user.home") + File.separator + "Documents"
-			+ File.separator + "UploadedImages" + File.separator;
-	private static final String SUCCESS_RESPONSE = "Successful";
-	private static final String FAILED_RESPONSE = "Failed";
+    private static final String FILE_UPLOAD_PATH = System.getProperty("user.home") + File.separator + "Documents"
+	    + File.separator + "UploadedImages" + File.separator;
 
-	/**
-	 * @param request
-	 * @param res
-	 * @throws Exception
-	 */
-	@POST
-	@Path("/multipleFiles")
-	@Consumes(MediaType.MULTIPART_FORM_DATA)
-	@Produces(MediaType.TEXT_PLAIN)
-	public void uploadFile(@Context HttpServletRequest request, @Context HttpServletResponse res) throws Exception {
+    @Autowired
+    ImageSizeConverter imageSizeConverter;
 
-		String responseStatus = SUCCESS_RESPONSE;
-		String candidateName = null;
+    /**
+     * @param request
+     * @param res
+     * @throws Exception
+     */
+    @POST
+    @Path("/multipleFiles")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.TEXT_PLAIN)
+    public void uploadFile(@Context HttpServletRequest request, @Context HttpServletResponse res) throws Exception {
 
-		// checks whether there is a file upload request or not
-		if (ServletFileUpload.isMultipartContent(request)) {
-			final FileItemFactory factory = new DiskFileItemFactory();
-			final ServletFileUpload fileUpload = new ServletFileUpload(factory);
-			try {
+	String candidateName = null;
 
-				final List items = fileUpload.parseRequest(request);
+	// imageSizeConverter = (ImageSizeConverter)
+	// SpringApplicationContext.getBean("imageSizeConverter");
+	imageSizeConverter.convert("Moin Moin, hier ist das Servlet");
 
-				if (items != null) {
-					final Iterator iterator = items.iterator();
+	// checks whether there is a file upload request or not
+	if (ServletFileUpload.isMultipartContent(request)) {
+	    final FileItemFactory factory = new DiskFileItemFactory();
+	    final ServletFileUpload fileUpload = new ServletFileUpload(factory);
+	    try {
 
-					while (iterator.hasNext()) {
-						final FileItem item = (FileItem) iterator.next();
-						final String itemName = item.getName();
-						final String fieldName = item.getFieldName();
-						final String fieldValue = item.getString();
+		final List items = fileUpload.parseRequest(request);
 
-						if (item.isFormField()) {
-							candidateName = fieldValue;
-							System.out.println("Field Name: " + fieldName + ", Field Value: " + fieldValue);
-							System.out.println("Candidate Name: " + candidateName);
-						} else {
-							final File savedFile = new File(FILE_UPLOAD_PATH + File.separator + itemName);
-							System.out.println("Saving the file: " + savedFile.getName());
-							item.write(savedFile);
-						}
-					}
-				}
-			} catch (FileUploadException fue) {
-				responseStatus = FAILED_RESPONSE;
-				fue.printStackTrace();
-			} catch (Exception e) {
-				responseStatus = FAILED_RESPONSE;
-				e.printStackTrace();
+		if (items != null) {
+		    final Iterator iterator = items.iterator();
+
+		    while (iterator.hasNext()) {
+			final FileItem item = (FileItem) iterator.next();
+			final String itemName = item.getName();
+			final String fieldName = item.getFieldName();
+			final String fieldValue = item.getString();
+
+			if (item.isFormField()) {
+			    candidateName = fieldValue;
+			    System.out.println("Field Name: " + fieldName + ", Field Value: " + fieldValue);
+			    System.out.println("Candidate Name: " + candidateName);
+			} else {
+			    final File savedFile = new File(FILE_UPLOAD_PATH + File.separator + itemName);
+			    System.out.println("Saving the file: " + savedFile.getName());
+			    item.write(savedFile);
 			}
+		    }
 		}
+	    } catch (FileUploadException fue) {
+		fue.printStackTrace();
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
 	}
+    }
+
 }
