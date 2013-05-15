@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="MonkeyBookFileUpload:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="MonkeyBookFileUpload.war">
-      <element id="artifact" artifact-name="MonkeyBookFileUpload:war exploded" />
-    </root>
-  </artifact>
-</component>
