@@ -21,7 +21,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.monkey.image.ImageSizeConverter;
+import com.monkey.image.resize.ImageSizeConverter;
 
 /**
  * Created with IntelliJ IDEA. User: Ric Date: 06.05.13 Time: 11:26 To change
@@ -48,16 +48,10 @@ public class UploadFileService {
     @Produces(MediaType.TEXT_PLAIN)
     public void uploadFile(@Context HttpServletRequest request, @Context HttpServletResponse res) throws Exception {
 
-	String candidateName = null;
-
-	// imageSizeConverter = (ImageSizeConverter)
-	// SpringApplicationContext.getBean("imageSizeConverter");
-	imageSizeConverter.convert("Moin Moin, hier ist das Servlet");
-
-	// checks whether there is a file upload request or not
 	if (ServletFileUpload.isMultipartContent(request)) {
 	    final FileItemFactory factory = new DiskFileItemFactory();
 	    final ServletFileUpload fileUpload = new ServletFileUpload(factory);
+
 	    try {
 
 		final List items = fileUpload.parseRequest(request);
@@ -70,16 +64,15 @@ public class UploadFileService {
 			final String itemName = item.getName();
 			final String fieldName = item.getFieldName();
 			final String fieldValue = item.getString();
+			// System.out.println("UploadFileService.uploadFile() "
+			// + fieldName);
+			// System.out.println("UploadFileService.uploadFile() "
+			// + fieldValue);
+			final File savedFile = new File(FILE_UPLOAD_PATH + File.separator + itemName);
+			System.out.println("Saving the file: " + savedFile.getName());
+			item.write(savedFile);
 
-			if (item.isFormField()) {
-			    candidateName = fieldValue;
-			    System.out.println("Field Name: " + fieldName + ", Field Value: " + fieldValue);
-			    System.out.println("Candidate Name: " + candidateName);
-			} else {
-			    final File savedFile = new File(FILE_UPLOAD_PATH + File.separator + itemName);
-			    System.out.println("Saving the file: " + savedFile.getName());
-			    item.write(savedFile);
-			}
+			imageSizeConverter.convert(savedFile);
 		    }
 		}
 	    } catch (FileUploadException fue) {
