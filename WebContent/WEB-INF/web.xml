@@ -17,7 +17,6 @@
 	
 	<servlet>
 		<servlet-name>jersey-servlet</servlet-name>
-		<!-- <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
 		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
@@ -32,7 +31,7 @@
 	</servlet-mapping>
 
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>uploader.html</welcome-file>
 	</welcome-file-list>
 
 

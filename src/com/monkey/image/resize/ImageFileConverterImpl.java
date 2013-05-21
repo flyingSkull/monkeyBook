@@ -12,26 +12,25 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.monkey.FilePathConstants;
+
 /**
  * Created with IntelliJ IDEA. User: Ric Date: 13.05.13 Time: 15:26 To change
  * this template use File | Settings | File Templates.
  */
-public class ImageSizeConverterImpl implements ImageSizeConverter {
-
-    private static final String FILE_RESIZE_PATH = System.getProperty("user.home") + File.separator + "Documents"
-	    + File.separator + "UploadedImages" + File.separator + "resizedImages" + File.separator;
+public class ImageFileConverterImpl implements ImageFileConverter {
 
     private int targetWidth = 100;
     private int targetHeight = 100;
 
     @Override
-    public BufferedImage convert(File file) {
+    public BufferedImage resize(File file, String itemName) {
 	try {
 	    BufferedImage srcImage = ImageIO.read(file);
 	    double determineImageScale = determineImageScale(srcImage.getWidth(), srcImage.getHeight(), targetWidth,
 		    targetHeight);
 	    BufferedImage dstImage = scaleImage(srcImage, determineImageScale);
-	    ImageIO.write(dstImage, "jpg", new File(FILE_RESIZE_PATH));
+	    ImageIO.write(dstImage, "jpg", new File(FilePathConstants.FILE_RESIZE_PATH + itemName));
 	    return dstImage;
 	} catch (IOException e) {
 	    throw new RuntimeException(e);
@@ -54,4 +53,5 @@ public class ImageSizeConverterImpl implements ImageSizeConverter {
 	double scaley = (double) targetHeight / sourceHeight;
 	return Math.min(scalex, scaley);
     }
+
 }

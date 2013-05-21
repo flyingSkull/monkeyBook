@@ -21,7 +21,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.monkey.image.resize.ImageSizeConverter;
+import com.monkey.FilePathConstants;
+import com.monkey.image.resize.ImageFileConverter;
 
 /**
  * Created with IntelliJ IDEA. User: Ric Date: 06.05.13 Time: 11:26 To change
@@ -31,11 +32,8 @@ import com.monkey.image.resize.ImageSizeConverter;
 @Path("/file")
 public class UploadFileService {
 
-    private static final String FILE_UPLOAD_PATH = System.getProperty("user.home") + File.separator + "Documents"
-	    + File.separator + "UploadedImages" + File.separator;
-
     @Autowired
-    ImageSizeConverter imageSizeConverter;
+    ImageFileConverter imageFileConverter;
 
     /**
      * @param request
@@ -62,17 +60,12 @@ public class UploadFileService {
 		    while (iterator.hasNext()) {
 			final FileItem item = (FileItem) iterator.next();
 			final String itemName = item.getName();
-			final String fieldName = item.getFieldName();
-			final String fieldValue = item.getString();
-			// System.out.println("UploadFileService.uploadFile() "
-			// + fieldName);
-			// System.out.println("UploadFileService.uploadFile() "
-			// + fieldValue);
-			final File savedFile = new File(FILE_UPLOAD_PATH + File.separator + itemName);
+
+			final File savedFile = new File(FilePathConstants.FILE_UPLOAD_PATH + File.separator + itemName);
 			System.out.println("Saving the file: " + savedFile.getName());
 			item.write(savedFile);
 
-			imageSizeConverter.convert(savedFile);
+			imageFileConverter.resize(savedFile, itemName);
 		    }
 		}
 	    } catch (FileUploadException fue) {

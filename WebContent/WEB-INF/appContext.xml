@@ -9,11 +9,6 @@
  	
 	<!-- Annotation-Injection -->
 	<context:component-scan base-package="com.monkey" />
-	<bean id="imageSizeConverter" class="com.monkey.image.impl.ImageSizeConverterImpl" />
-
-	<!-- non-AnotationInjection -->
-	<!-- <bean class="com.monkey.context.SpringApplicationContext"/> -->
-	<!-- <bean id="imageSizeConverter" class="com.monkey.image.ImageSizeConverterImpl" 
-		/> -->
+	<bean id="imageFileConverter" class="com.monkey.image.resize.ImageFileConverterImpl" />
 
 </beans>
