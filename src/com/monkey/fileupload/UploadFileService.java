@@ -61,6 +61,8 @@ public class UploadFileService {
 			final FileItem item = (FileItem) iterator.next();
 			final String itemName = item.getName();
 
+			createUploadFolderStructure();
+
 			final File savedFile = new File(FilePathConstants.FILE_UPLOAD_PATH + File.separator + itemName);
 			System.out.println("Saving the file: " + savedFile.getName());
 			item.write(savedFile);
@@ -76,4 +78,9 @@ public class UploadFileService {
 	}
     }
 
+    private void createUploadFolderStructure() {
+
+	ImageUtil.createFolderStructure(FilePathConstants.FILE_UPLOAD_PATH);
+	ImageUtil.createFolderStructure(FilePathConstants.FILE_RESIZE_PATH);
+    }
 }
