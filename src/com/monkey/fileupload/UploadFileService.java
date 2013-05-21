@@ -53,13 +53,14 @@ public class UploadFileService {
 
 	    try {
 
-		final List items = fileUpload.parseRequest(request);
+		@SuppressWarnings("unchecked")
+		final List<FileItem> items = fileUpload.parseRequest(request);
 
 		if (items != null) {
-		    final Iterator iterator = items.iterator();
+		    final Iterator<FileItem> iterator = items.iterator();
 
 		    while (iterator.hasNext()) {
-			final FileItem item = (FileItem) iterator.next();
+			final FileItem item = iterator.next();
 			final String itemName = item.getName();
 
 			createUploadFolderStructure();
