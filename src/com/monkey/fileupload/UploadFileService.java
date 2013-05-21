@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.monkey.FilePathConstants;
+import com.monkey.image.ImageUtil;
 import com.monkey.image.resize.ImageFileConverter;
 
 /**

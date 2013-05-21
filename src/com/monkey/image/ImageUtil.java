@@ -1,4 +1,4 @@
-package com.monkey.fileupload;
+package com.monkey.image;
 
 import java.io.File;
 
