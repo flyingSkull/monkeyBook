@@ -1,3 +1,14 @@
+# intelliJ- Files
+.idea
+
+
+# eclipse-Files
+.classpath
+.settings
+
+target
+
+
 *.class
 
 # Package Files #
